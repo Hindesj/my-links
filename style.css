@@ -1,0 +1,76 @@
+main {
+  z-index: 99;
+  position: absolute;
+}
+canvas{
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#profilePic {
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+}
+img{
+  border-radius: 50%;
+  
+}
+#links{
+  margin-top: 10px;
+}
+#link1{
+  display: flex;
+  justify-content: center;
+}
+
+#button{
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  background-color: #ddd;
+  font-size: large;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin:15px 2px;
+  cursor: pointer;
+  border-radius: 16px;
+  width: 50%;
+}
+#button:hover{
+  background-color: #f1f1f1;
+}
+
+@media screen and (max-width: 2000px) {
+  #button{
+    width: 30%;
+  }
+  img{
+    width: 15%;
+  }
+  
+}
+
+@media screen and (max-width: 844px){
+  #button{
+    width: 70%;
+  }
+  img{
+    width:30%;
+  }
+}
+
+.footerLogos {
+  display: inline-block;
+  padding: 5%;
+}
+
+.pdf{
+  text-decoration: none;
+  color: Black;
+}

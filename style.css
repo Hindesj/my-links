@@ -25,11 +25,13 @@ img{
   justify-content: center;
 }
 
+
 #button{
   font-family: Arial, Helvetica, sans-serif;
   text-transform: uppercase;
   letter-spacing: 8px;
   background-color: #ddd;
+  opacity:0.75;
   font-size: large;
   border: none;
   color: black;
@@ -37,19 +39,27 @@ img{
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  margin:15px 2px;
+  margin:20px 2px;
   cursor: pointer;
   border-radius: 16px;
-  width: 50%;
+  width: 450%;
 }
 #button:hover{
   background-color: #f1f1f1;
 }
 
+#button1:hover{
+  background-color: #f1f1f1;
+}
+
 @media screen and (max-width: 2000px) {
-  #button{
+   #button{
     width: 30%;
   }
+  #button1{
+    width: 28%;
+  }
+
   img{
     width: 15%;
   }
@@ -59,6 +69,9 @@ img{
 @media screen and (max-width: 844px){
   #button{
     width: 70%;
+  }
+  #button1{
+    width: 59%;
   }
   img{
     width:30%;
@@ -70,7 +83,3 @@ img{
   padding: 5%;
 }
 
-.pdf{
-  text-decoration: none;
-  color: Black;
-}

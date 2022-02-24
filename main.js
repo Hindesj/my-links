@@ -1,8 +1,9 @@
 import './style.css'
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { Mesh } from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
+//document.getElementById('button').src = pdfUrl;
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
@@ -46,101 +47,45 @@ function onWindowResize() {
 
 }
 
-const material = new THREE.MeshBasicMaterial({color: 0x00FF41, wireframe: true});
+
 
 //camera position
-camera.position.setZ(7);
-camera.position.setY(-50);
+camera.position.setZ(0);
+camera.position.setY(2);
+camera.position.setX(4);
 
-function  cameraAnimation(){
-  renderer.render(scene, camera);
-  
-    for (let i = 0; i<=50; i++){
-      camera.position.y += .003;
-      //camera.rotation.z += .006;
-      if (camera.position.y >= 50){
-        break;
-      }
-    
-  }
-    
-  
-  requestAnimationFrame(cameraAnimation);
-}
+const assetLoader = new GLTFLoader();
+let mixer;
+assetLoader.load('/xWing.blend.glb', function(object){
+  const model = object.scene;
+  mixer = new THREE.AnimationMixer(model);
+  object.animations.forEach((clip) => {mixer.clipAction(clip).play(); });
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x00FF41,
+    wireframe: true
+  });
+  model.position.setX(-2);
+  model.position.setY(-1)
+  model.traverse( function ( child ) {
+  if ( child.isMesh ) child.material=material;
+  } );
+    scene.add(model);
 
-
-//Torus
-/*
-const geometry = new THREE.TorusGeometry(30,10,16,100);
-const torus = new THREE.Mesh( geometry, material);
-torus.position.set(10,100,0);
-scene.add(torus);
-*/
-//Plane
-const planeGeometry = new THREE.PlaneGeometry(200, 100, 15, 15);
-const plane = new THREE.Mesh(planeGeometry, material);
-scene.add(plane);
-
-//Cone
-const coneGeometry = new THREE.ConeGeometry(30, 20, 10, 10);
-const cone = new THREE.Mesh(coneGeometry, material);
-cone.rotation.x = Math.PI /2;
-cone.position.set(70,20,10);
-scene.add( cone );
-
-//Dode 
-const dodeGeometry = new THREE.DodecahedronGeometry(10);
-const dode = new THREE.Mesh(dodeGeometry, material);
-dode.position.set(-20, 20, 10);
-scene.add( dode );
-
-//Sphere Geometry X
-const sphereGeometry = new THREE.SphereGeometry(5, 32, 8);
-const sphere = new THREE.Mesh(sphereGeometry, material);
-sphere.position.set(-50, -20, 0)
-scene.add( sphere );
-
-function  roll(){
-  renderer.render(scene, camera);
-  for (let i = 0; i<= 100; i++){
-    sphere.position.x += .003;
-    sphere.rotation.y += .006;
-  }
-  requestAnimationFrame(roll);
-}
-
-//Sphere Geometry Y
-const sphereGeometry1 = new THREE.SphereGeometry(5, 32, 16);
-const sphere1 = new THREE.Mesh(sphereGeometry1, material);
-sphere1.position.set(0, -43, 0)
-scene.add( sphere1 );
-
-function roll1(){
-  //const targetPositionY = 100
-  renderer.render(scene, camera);
-
-  for (let i = 0; i <= 100; i++){
-    sphere1.position.y += .001;
-    sphere1.rotation.x += .0005
-  }
-  requestAnimationFrame(roll1);
-}
-
-
+});
 //Orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
 
 
 //animation of the scene
+const clock = new THREE.Clock();
 function animate(){
   requestAnimationFrame(animate);
 
   controls.update();
+  if (mixer)
+    mixer.update(clock.getDelta());
   renderer.render(scene, camera);
 }
 
-cameraAnimation();
-roll1();
-roll();
 animate();
 
